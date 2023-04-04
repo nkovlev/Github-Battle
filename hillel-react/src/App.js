@@ -1,81 +1,81 @@
-import React, { Component } from 'react';
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import Modal from './Components/ModalDelete/ModalDelete'
+import AddPost from './Components/AddPost/AddPost'
 
-class Modal extends Component {
-  render() {
-    const { title, message, onCancel, onConfirm } = this.props;
+function App() {
+  const [posts, setPosts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [postIdToDelete, setPostIdToDelete] = useState(null);
+  const [showAddPost, setShowAddPost] = useState(false);
 
-    return (
-      <div className="modal">
-        <div className="modal-content">
-          <h3>{title}</h3>
-          <p>{message}</p>
-          <div className="modal-buttons">
-            <button onClick={onCancel}>No</button>
-            <button onClick={onConfirm}>Yes</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: [],
-      showModal: false,
-      postIdToDelete: null
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then(response => response.json())
       .then(data => {
-        this.setState({ posts: data.slice(0, 5) }); // обрезаем массив до первых 5 элементов
+        setPosts(data.slice(0, 5));
       });
-  }
+  }, []);
 
-  handleDelete = (postId) => {
-    this.setState({ showModal: true, postIdToDelete: postId });
-  }
+  const handleDelete = (postId) => {
+    setShowModal(true);
+    setPostIdToDelete(postId);
+  };
 
-  handleDeleteConfirm = () => {
-    const { posts, postIdToDelete } = this.state;
+  const handleDeleteConfirm = () => {
     const updatedPosts = posts.filter(post => post.id !== postIdToDelete);
-    this.setState({ posts: updatedPosts, showModal: false, postIdToDelete: null });
-  }
+    setPosts(updatedPosts);
+    setShowModal(false);
+    setPostIdToDelete(null);
+  };
 
-  handleDeleteCancel = () => {
-    this.setState({ showModal: false, postIdToDelete: null });
-  }
+  const handleDeleteCancel = () => {
+    setShowModal(false);
+    setPostIdToDelete(null);
+  };
 
-  render() {
-    const { posts, showModal } = this.state;
+  const handleAddPostSubmit = (newPost) => {
+    const id = posts.length + 1;
+    const post = { id, ...newPost };
+    setPosts([...posts, post]);
+    setShowAddPost(false);
+  };
 
-    return (
-      <div>
-        {posts.map(post => (
-          <div key={post.id} className="post">
-            <h3>{post.id}</h3>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            <button onClick={() => this.handleDelete(post.id)}>Delete</button>
-          </div>
-        ))}
-        {showModal &&
-          <Modal
-            title="Delete Post"
-            message="Are you sure you want to delete this post?"
-            onCancel={this.handleDeleteCancel}
-            onConfirm={this.handleDeleteConfirm}
-          />
-        }
-      </div>
-    );
-  }
+  const handleAddPostCancel = () => {
+    setShowAddPost(false)
+  };
+
+  return (
+    <div>
+      {!showAddPost && (
+        <button onClick={() => setShowAddPost(true)} className="addPostBtn">Add post</button>
+      )}
+      {showAddPost && (
+        <AddPost 
+        onSubmit={handleAddPostSubmit}
+        onCancel={handleAddPostCancel}
+        />
+      )}
+
+      {posts.map(post => (
+        <div key={post.id} className="post">
+          <h3>{post.id}</h3>
+          <h3>{post.title}</h3>
+          <p>{post.body}</p>
+          <button onClick={() => handleDelete(post.id)}>Delete</button>
+        </div>
+      ))}
+
+      {showModal &&
+        <Modal
+          title="Delete Post"
+          message="Are you sure you want to delete this post?"
+          onCancel={handleDeleteCancel}
+          onConfirm={handleDeleteConfirm}
+        />
+      }
+    </div>
+  );
 }
 
 export default App;
