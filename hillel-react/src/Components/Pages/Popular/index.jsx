@@ -1,10 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { fetchPopularRep } from "../../../api";
-import Repositories from "../../Repositories";
-import SelectedLanguage from "../../SelectedLanguage";
+import Repositories from "./Repositories";
+import SelectedLanguage from "./SelectedLanguage";
 import { PulseLoader } from "react-spinners";
-import { useLocation } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 
 
@@ -32,7 +31,7 @@ function Popular() {
     useEffect(() => {
         const lang = searchParams.get('lang');
         if (lang !== selectedLanguage) {
-            setSelectedLanguage(lang);
+            setSelectedLanguage(lang || 'All');
         }
     }, [searchParams, setSelectedLanguage]);
     

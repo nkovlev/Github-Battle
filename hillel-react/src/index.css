@@ -138,6 +138,7 @@ li {
   text-align: center;
   font-size: 30px;
   font-weight: 200;
+  color: white;
 }
 
 .reset {
@@ -157,4 +158,17 @@ li {
 .loader{
   padding-top: 20px;
   text-align: center;
+}
+
+.results{
+  color:white;
+  text-align: center;
+  font-weight: 600;
+}
+
+.info-wrapper{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  gap:5px ;
 }

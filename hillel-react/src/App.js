@@ -1,9 +1,10 @@
 
 import './App.css';
 import Home from './Components/Pages/Home/Home';
-import Popular from './Components/Pages/Popular/Popular';
-import Battle from './Components/Pages/Battle/Battle';
+import Popular from './Components/Pages/Popular/index';
+import Battle from './Components/Pages/Battle/index';
 import Navigation from './Components/Navigation/Navigation';
+import Results from './Components/Pages/Battle/Results';
 
 import {
   createBrowserRouter,
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "battle",
         element:<Battle/>,
+      },
+      {
+        path: "battle/results",
+        element:<Results/>,
       },
       {
         path: "*",
