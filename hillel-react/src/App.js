@@ -1,28 +1,50 @@
-import React, { Component } from 'react';
-import Example from './Example';
-import './App.css'
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      country: 'Ukraine'
-    };
-  }
+import './App.css';
+import Home from './Components/Pages/Home/Home';
+import Popular from './Components/Pages/Popular/index';
+import Battle from './Components/Pages/Battle/index';
+import Navigation from './Components/Navigation/Navigation';
+import Results from './Components/Pages/Battle/Results';
 
-  handleClick = () => {
-    const newCountry = this.state.country === 'Ukraine' ? 'Ukraine is the best country' : 'Ukraine';
-    this.setState({ country: newCountry });
-  }
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useSearchParams,
+} from "react-router-dom";
 
-  render() {
-    return (
-      <div>
-         <Example country={this.state.country} />
-        <button onClick={this.handleClick} className="myBtn">Change country</button>
-      </div>
-    );
+const router = createBrowserRouter([
+  {
+    element: <Navigation/>,
+    children: [
+      {
+        path: "/",
+        element:<Home/>,
+      },
+      {
+        path: "popular",
+        element:<Popular/>,
+      },
+      {
+        path: "battle",
+        element:<Battle/>,
+      },
+      {
+        path: "battle/results",
+        element:<Results/>,
+      },
+      {
+        path: "*",
+        element: <h1>Error</h1>,
+      }
+    ]
   }
+]);
+
+function App() {
+
+  return (
+    <RouterProvider router={router} />
+  );
 }
 
 export default App;
