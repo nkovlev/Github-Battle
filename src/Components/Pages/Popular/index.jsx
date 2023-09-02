@@ -33,7 +33,7 @@ function Popular() {
         if (lang !== selectedLanguage) {
             setSelectedLanguage(lang || 'All');
         }
-    }, [searchParams, setSelectedLanguage,setSearchParams]);
+    }, [searchParams, setSelectedLanguage, selectedLanguage]);
     
     return (  
         <div> 
