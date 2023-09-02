@@ -15,6 +15,7 @@ function Popular() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [isProcessing, setIsProcessing] = useState(false);
     
+
     useEffect(() => {
         setIsProcessing(true);
         setLoading(true);
@@ -24,9 +25,9 @@ function Popular() {
         .finally(() => {
             setLoading(false);
             setIsProcessing(false);
-        });
-    }, [selectedLanguage, setSearchParams]);
-    
+        })
+    },[selectedLanguage])// eslint-disable-next-line
+
     useEffect(() => {
         const lang = searchParams.get('lang');
         if (lang !== selectedLanguage) {
