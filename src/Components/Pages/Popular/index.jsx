@@ -26,7 +26,7 @@ function Popular() {
             setLoading(false);
             setIsProcessing(false);
         })
-    },[selectedLanguage])
+    },[selectedLanguage,setSearchParams])
 
     useEffect(() => {
         const lang = searchParams.get('lang');
