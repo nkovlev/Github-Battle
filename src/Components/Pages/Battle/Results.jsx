@@ -17,7 +17,7 @@ function Results() {
   
       battle([params.get("playerOneName"), params.get("playerTwoName")])
         .then((data) => setData(data));
-    }, []);
+    }, [location.search]);
   
     return (
       <div className="row">
