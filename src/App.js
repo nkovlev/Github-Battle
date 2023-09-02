@@ -9,7 +9,6 @@ import Results from './Components/Pages/Battle/Results';
 import {
   createBrowserRouter,
   RouterProvider,
-  useSearchParams,
 } from "react-router-dom";
 
 const router = createBrowserRouter([
